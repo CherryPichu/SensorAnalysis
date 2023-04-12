@@ -1,0 +1,39 @@
+/* 
+flexbox 참고!
+https://heropy.blog/2018/11/24/css-flexible-box/ 
+*/
+ body {
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    transition: opacity 0.2s;
+    opacity:0;
+  }
+
+#Top {
+  height: 80px;
+  width: 73vw;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+#Top-row {  
+  width: 73vw;
+  height: 73px;  
+  display: flex;
+  flex-direction: row; 
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#main{
+  width: 73vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+  
