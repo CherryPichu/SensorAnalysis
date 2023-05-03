@@ -1,5 +1,6 @@
 const express = require('express');
 const SensorMeta = require('./models/SensorMetaDAO.js');
+const Sensor = require('./models/SensorDAO.js');
 const port = process.env.PORT || 8080;
 
 const server = express();
@@ -14,10 +15,13 @@ server.listen(port, () => {
 server.get('/', (req, res) => {
     const senMeta  = new SensorMeta()
     senMeta.findAll().then((result) => {
-        res.json( result );
+        const sensor = new Sensor()
+        sensor.findAll().then((result2) => {
+            res.send( result2);
+        })
     })
-   
 })
+
 
 
 module.exports = server;

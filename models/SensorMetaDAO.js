@@ -1,7 +1,7 @@
 const dbConn = require('./db.js');
 const SensorMetaDTO = require('./SensorMetaDTO.js');
 class SensorMetaDAO {
-    constructor(dbFilePath) {
+    constructor() {
       this.db = dbConn;
     }
   
