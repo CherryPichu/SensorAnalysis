@@ -9,7 +9,4 @@ let db = new sqlite3.Database('./models/database.db', (err) => {
 
   
 
-
-
 module.exports = db;
-
