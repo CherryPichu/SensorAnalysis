@@ -35,7 +35,22 @@ class SensorDAO {
       });
     });
   }
-
+  findBySensorId(id) {
+    const sql = `SELECT * FROM Sensor WHERE sensorId = ?`;
+    const values = [id];
+    return new Promise((resolve, reject) => {
+      this.db.all(sql, values, function(err, row) {
+        if (err) {
+          reject(err);
+        } else if (row) {
+            resolve(row.map(row => new SensorDTO(row.id, row.sensorId, row.value, row.createAt, row.hash)))
+        //   resolve(new SensorDTO(row.id, row.sensorId, row.value, row.createAt, row.hash));
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  }
   findAll() {
     const sql = `SELECT * FROM Sensor`;
     return new Promise((resolve, reject) => {
