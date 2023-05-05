@@ -1,3 +1,7 @@
+/*
+https://stackoverflow.com/questions/32504307/how-to-use-sqlite3-module-with-electron
+sqlite3 용 rebuild 추가
+*/
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 const path = require('path')

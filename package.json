@@ -6,7 +6,8 @@
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "postinstall": "install-app-deps"
   },
   "repository": "https://github.com/hallym-peerism",
   "author": "hallym-peerism",
@@ -17,7 +18,8 @@
     "@electron-forge/maker-rpm": "^6.0.5",
     "@electron-forge/maker-squirrel": "^6.0.5",
     "@electron-forge/maker-zip": "^6.0.5",
-    "electron": "^23.1.4"
+    "electron": "^23.1.4",
+    "electron-builder": "^23.6.0"
   },
   "dependencies": {
     "body": "^5.1.0",
