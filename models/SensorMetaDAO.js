@@ -6,14 +6,14 @@ class SensorMetaDAO {
     }
   
     create(sensorId, description, iconSvg) {
-      const sql = `INSERT INTO SensorMeta (Sensorid, description, iconSvg) VALUES (?, ?)`;
-      const values = [sensorId, description];
+      const sql = `INSERT INTO SensorMeta (Sensorid, description, iconSvg) VALUES (?, ?, ?)`;
+      const values = [sensorId, description, iconSvg];
       return new Promise((resolve, reject) => {
         this.db.run(sql, values, function(err) {
           if (err) {
             reject(err);
           } else {
-            resolve(new SensorMetaDTO(this.lastID, null, sensorId, description, iconSvg));
+            resolve(new SensorMetaDTO(null, null, sensorId, description, iconSvg));
           }
         });
       });

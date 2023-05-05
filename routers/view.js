@@ -104,12 +104,12 @@ router.get('/getSensor/:sensorId', async (req, res) => {
 /*
 새로운 센서 추가
 */
-router.get('/addSensor/:sensorId/:icon/:description', (req, res) => {
+router.get('/addSensor/:sensorId/:description/:iconSvg', (req, res) => {
     const snmtDtbs  = new SensorMeta()
     const sensorId = req.params.sensorId;
-    const icon = req.params.icon;
     const description = req.params.description;
-    snmtDtbs.addSensor(sensorId, icon, description).then((result) => {
+    const iconSvg = req.params.iconSvg;
+    snmtDtbs.create(sensorId, description, iconSvg).then((result) => {
         res.send(result)
     })
 })
