@@ -5,15 +5,15 @@ class SensorMetaDAO {
       this.db = dbConn;
     }
   
-    create(sensorId, description) {
-      const sql = `INSERT INTO SensorMeta (Sesnsorid, description) VALUES (?, ?)`;
+    create(sensorId, description, iconSvg) {
+      const sql = `INSERT INTO SensorMeta (Sensorid, description, iconSvg) VALUES (?, ?)`;
       const values = [sensorId, description];
       return new Promise((resolve, reject) => {
         this.db.run(sql, values, function(err) {
           if (err) {
             reject(err);
           } else {
-            resolve(new SensorMetaDTO(this.lastID, null, sensorId, description));
+            resolve(new SensorMetaDTO(this.lastID, null, sensorId, description, iconSvg));
           }
         });
       });
@@ -27,7 +27,7 @@ class SensorMetaDAO {
           if (err) {
             reject(err);
           } else if (row) {
-            resolve(new SensorMetaDTO(row.id, row.CreateTime, row.Sesnsorid, row.description));
+            resolve(new SensorMetaDTO(row.id, row.CreateTime, row.sensorId, row.description, row.iconSvg));
           } else {
             resolve(null);
           }
@@ -42,16 +42,32 @@ class SensorMetaDAO {
           if (err) {
             reject(err);
           } else {
-            const sensorMetaList = rows.map(row => new SensorMetaDTO(row.id, row.CreateTime, row.Sesnsorid, row.description));
+            const sensorMetaList = rows.map(row => new SensorMetaDTO(row.id, row.CreateTime, row.sensorId, row.description, row.iconSvg));
             resolve(sensorMetaList);
+          }
+        });
+      });
+    }
+
+    findBySensorId(id) {
+      const sql = `SELECT * FROM SensorMeta WHERE sensorId = ?`;
+      const values = [id];
+      return new Promise((resolve, reject) => {
+        this.db.get(sql, values, function(err, row) {
+          if (err) {
+            reject(err);
+          } else if (row) {
+              resolve(new SensorMetaDTO(row.id, row.CreateTime, row.sensorId, row.description, row.iconSvg))
+          } else {
+            resolve(null);
           }
         });
       });
     }
   
     update(sensorMetaDTO) {
-      const sql = `UPDATE SensorMeta SET Sesnsorid = ?, description = ? WHERE id = ?`;
-      const values = [sensorMetaDTO.sensorId, sensorMetaDTO.description, sensorMetaDTO.id];
+      const sql = `UPDATE SensorMeta SET Sensorid = ?, description = ? WHERE id = ?`;
+      const values = [sensorMetaDTO.sensorId, sensorMetaDTO.description, sensorMetaDTO.id, sensorMetaDTO.iconSvg];
       return new Promise((resolve, reject) => {
         this.db.run(sql, values, function(err) {
           if (err) {

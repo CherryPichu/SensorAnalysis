@@ -26,7 +26,7 @@ example:
 /**
  * SensorMeta의 findAll()을 호출하여 결과를 JSON으로 반환한다.
  */
-router.get('/', async (req, res) => {
+router.get('/main', async (req, res) => {
     const snmtDtbs  = new SensorMeta()
     /*
     DB에 있으면 :
@@ -75,20 +75,45 @@ router.get('/', async (req, res) => {
     })
 })
 
-router.get('/getSesnor/:sensorId', async (req, res) => {
+router.get('/getSensor/:sensorId', async (req, res) => {
     const snmtDtbs  = new SensorMeta()
-    /*
-    DB에 있으면 :
-    SensorMetaDTO {
-        id: 1,
-        createTime: '2023-05-02 16:59:50',
-        sensorId: 'sqlite',
-        description: 'dfsefe'
-    }
-    */
+    const snDtbs = new Sensor()
+    const sensorId = req.params.sensorId;
 
+    snmtDtbs.findBySensorId(sensorId).then((snmtD) => { // snmtD : sensorMetaData
+        snDtbs.findBySensorId(sensorId).then((snD) => {
+            let valList =  snD.map((data) => { return data['value'] });
+            let creatAtList =  snD.map((data) => { return data['createAt'] });
 
+            if(snD == null) { // 데이터가 없다면
+                snmtD['SensorData'] = valList;
+                res.send(snmtD)
+                return; // 종료
+            }
+            
+            
+            snmtD['SensorData'] = valList;
+            snmtD['timestamp'] = creatAtList;
+            res.json(snmtD)
+            // 출력 ex) {"id":1,"createTime":"2023-05-02 16:59:50","sensorId":"sqlite","description":"dfsefe","SensorData":[1],"timestamp":[1683136544000]}
+        })
+   })
 })
+
+
+/*
+새로운 센서 추가
+*/
+router.get('/addSensor/:sensorId/:icon/:description', (req, res) => {
+    const snmtDtbs  = new SensorMeta()
+    const sensorId = req.params.sensorId;
+    const icon = req.params.icon;
+    const description = req.params.description;
+    snmtDtbs.addSensor(sensorId, icon, description).then((result) => {
+        res.send(result)
+    })
+})
+
 
             
 
