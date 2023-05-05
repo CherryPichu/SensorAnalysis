@@ -6,15 +6,15 @@ class SensorDAO {
     this.db = dbConn
   }
 
-  create(sensorId, value, createAt, hash) {
-    const sql = `INSERT INTO Sensor (sensorId, value, createAt, hash) VALUES (?, ?, ?, ?)`;
-    const values = [sensorId, value, createAt, hash];
+  create(sensorId, value,  hash) {
+    const sql = `INSERT INTO Sensor (sensorId, value, hash) VALUES (?, ?, ?)`;
+    const values = [sensorId, value, hash];
     return new Promise((resolve, reject) => {
       this.db.run(sql, values, function(err) {
         if (err) {
           reject(err);
         } else {
-          resolve(new SensorDTO(this.lastID, sensorId, value, createAt, hash));
+          resolve(new SensorDTO(this.lastID, sensorId, value, hash));
         }
       });
     });

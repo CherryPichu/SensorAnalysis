@@ -110,7 +110,19 @@ router.get('/addSensor/:sensorId/:description/:iconSvg', (req, res) => {
     const description = req.params.description;
     const iconSvg = req.params.iconSvg;
     snmtDtbs.create(sensorId, description, iconSvg).then((result) => {
-        res.send(result)
+        res.json(result)
+    })
+})
+
+/*
+데이터 추가
+*/
+router.get('/addSensorData/:sensorId/:value', (req, res) => {
+    const snDtbs  = new Sensor()
+    const sensorId = req.params.sensorId;
+    const value = req.params.value;
+    snDtbs.create(sensorId, value).then((result) => {
+        res.json(result)
     })
 })
 
