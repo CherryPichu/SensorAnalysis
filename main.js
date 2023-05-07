@@ -1,6 +1,11 @@
+/*
+https://stackoverflow.com/questions/32504307/how-to-use-sqlite3-module-with-electron
+sqlite3 용 rebuild 추가
+*/
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
+const server = require('./server.js');
 
 
 
@@ -17,7 +22,6 @@ function createWindow () {
 
     mainWindow.loadFile(path.join(__dirname, './src/static/main.html'))
     mainWindow.webContents.openDevTools(); // Dev 툴 열기
-
 }
 
 
@@ -27,12 +31,12 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
     createWindow()
-
     app.on('activate', function () {
         // On macOS it's common to re-create a window in the app when the
         // dock icon is clicked and there are no other windows open.
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
+
 })
 
 
