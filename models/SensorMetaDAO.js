@@ -5,15 +5,15 @@ class SensorMetaDAO {
       this.db = dbConn;
     }
   
-    create(sensorId, description, iconSvg) {
-      const sql = `INSERT INTO SensorMeta (Sensorid, description, iconSvg) VALUES (?, ?, ?)`;
-      const values = [sensorId, description, iconSvg];
+    create(title, sensorId,  description, iconSvg) {
+      const sql = `INSERT INTO SensorMeta (Sensorid, title, description, iconSvg) VALUES (?, ?, ?, ?)`;
+      const values = [sensorId, title, description, iconSvg];
       return new Promise((resolve, reject) => {
         this.db.run(sql, values, function(err) {
           if (err) {
             reject(err);
           } else {
-            resolve(new SensorMetaDTO(null, null, sensorId, description, iconSvg));
+            resolve(new SensorMetaDTO(null, null, sensorId, title, description, iconSvg));
           }
         });
       });
@@ -27,7 +27,7 @@ class SensorMetaDAO {
           if (err) {
             reject(err);
           } else if (row) {
-            resolve(new SensorMetaDTO(row.id, row.CreateTime, row.sensorId, row.description, row.iconSvg));
+            resolve(new SensorMetaDTO(row.id, row.CreateTime,  row.sensorId, row.title, row.description, row.iconSvg));
           } else {
             resolve(null);
           }
@@ -42,7 +42,7 @@ class SensorMetaDAO {
           if (err) {
             reject(err);
           } else {
-            const sensorMetaList = rows.map(row => new SensorMetaDTO(row.id, row.CreateTime, row.sensorId, row.description, row.iconSvg));
+            const sensorMetaList = rows.map(row => new SensorMetaDTO(row.id, row.CreateTime, row.sensorId, row.title, row.description, row.iconSvg));
             resolve(sensorMetaList);
           }
         });
@@ -57,7 +57,7 @@ class SensorMetaDAO {
           if (err) {
             reject(err);
           } else if (row) {
-              resolve(new SensorMetaDTO(row.id, row.CreateTime, row.sensorId, row.description, row.iconSvg))
+              resolve(new SensorMetaDTO(row.id, row.CreateTime, row.sensorId, row.title, row.description, row.iconSvg))
           } else {
             resolve(null);
           }
@@ -66,8 +66,8 @@ class SensorMetaDAO {
     }
   
     update(sensorMetaDTO) {
-      const sql = `UPDATE SensorMeta SET Sensorid = ?, description = ? WHERE id = ?`;
-      const values = [sensorMetaDTO.sensorId, sensorMetaDTO.description, sensorMetaDTO.id, sensorMetaDTO.iconSvg];
+      const sql = `UPDATE SensorMeta SET Sensorid = ?, title = ?  description = ? WHERE id = ?`;
+      const values = [sensorMetaDTO.sensorId, sensorMetaDTO.title, sensorMetaDTO.description, sensorMetaDTO.id, sensorMetaDTO.iconSvg];
       return new Promise((resolve, reject) => {
         this.db.run(sql, values, function(err) {
           if (err) {
